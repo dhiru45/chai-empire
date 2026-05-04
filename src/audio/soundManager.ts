@@ -1,5 +1,7 @@
 import { Howl } from 'howler'
 
+const sound = (file: string) => `${import.meta.env.BASE_URL}${file}`
+
 type SoundId = 'coin' | 'order' | 'fail' | 'celebrate'
 
 const sfx: Partial<Record<SoundId, Howl>> = {}
@@ -29,10 +31,10 @@ export const soundManager = {
   play(id: SoundId, enabled: boolean) {
     if (!enabled) return
     const paths: Record<SoundId, string> = {
-      coin: '/sounds/coin.mp3',
-      order: '/sounds/order.mp3',
-      fail: '/sounds/fail.mp3',
-      celebrate: '/sounds/celebrate.mp3',
+      coin: sound('sounds/coin.mp3'),
+      order: sound('sounds/order.mp3'),
+      fail: sound('sounds/fail.mp3'),
+      celebrate: sound('sounds/celebrate.mp3'),
     }
     try {
       sfxHowl(id, paths[id]).play()
@@ -44,7 +46,7 @@ export const soundManager = {
   kettleLoop(enabled: boolean, brewing: boolean) {
     if (!kettleHowl) {
       kettleHowl = new Howl({
-        src: ['/sounds/kettle.mp3'],
+        src: [sound('sounds/kettle.mp3')],
         loop: true,
         volume: 0.22,
         preload: false,
@@ -84,7 +86,7 @@ export const soundManager = {
   music(enabled: boolean) {
     if (!musicHowl) {
       musicHowl = new Howl({
-        src: ['/sounds/music.mp3'],
+        src: [sound('sounds/music.mp3')],
         loop: true,
         volume: 0.18,
         preload: false,
