@@ -71,3 +71,75 @@ export default defineConfig([
   },
 ])
 ```
+
+## Backend API server (for Android integration)
+
+This project now includes a Node.js backend API under `server/index.js` for:
+- global leaderboard
+- per-player stats
+- cloud save state
+
+### Run API server
+
+```bash
+npm run api:dev
+```
+
+or production style:
+
+```bash
+npm run api:start
+```
+
+Default port is `4000`. Override with `PORT`, for example:
+
+```bash
+PORT=5000 npm run api:start
+```
+
+PowerShell:
+
+```powershell
+$env:PORT=5000; npm run api:start
+```
+
+### Endpoints
+
+- `GET /health`
+- `GET /api/game/bootstrap`
+- `GET /api/leaderboard?limit=20`
+- `POST /api/leaderboard`
+- `GET /api/players/:playerId/stats`
+- `PUT /api/players/:playerId/stats`
+- `GET /api/players/:playerId/save`
+- `PUT /api/players/:playerId/save`
+
+### Request examples
+
+Submit leaderboard score:
+
+```json
+{
+  "playerId": "player-123",
+  "name": "ChaiMaster",
+  "score": 90210,
+  "level": 18,
+  "date": "2026-05-06T12:00:00.000Z"
+}
+```
+
+Save stats:
+
+```json
+{
+  "level": 18,
+  "xp": 2400,
+  "money": 12050,
+  "reputation": 87,
+  "totalServed": 520,
+  "totalEarned": 48900,
+  "day": 33
+}
+```
+
+Cloud save body can be the full game-state object your Android game wants to persist.
